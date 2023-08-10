@@ -1,7 +1,7 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const userSchema = Schema({
-  name: {
+  username: {
     type: String,
     required: true,
     trim: true,
@@ -9,11 +9,13 @@ const userSchema = Schema({
   email: {
     type: String,
     unique: true,
+    notNull: false,
     trim: true,
   },
   cellphone: {
     type: String,
     unique: true,
+    notNull: false,
     trim: true,
   },
   password: {

@@ -17,7 +17,7 @@ const jwtValidationMiddleware = (req, res = response, next) => {
 
   try {
     const { uid } = jwt.verify(token, jwtSecret);
-    req.uid = uid; // save token in req
+    req.uid = uid;
   } catch (error) {
     return res.status(401).json({
       error: 'Token not valid',

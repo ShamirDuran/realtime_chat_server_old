@@ -1,10 +1,15 @@
+const { logger } = require('../utils/logs.util');
+
 /**
  * Validate global errors and send response
  */
 const errorHandlerMiddleware = (err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  console.error(err.message, err.stack);
-  return res.status(statusCode).json({ error: err.message });
+  const errorStatus = err.statusCode || 500;
+  const errorMessage = err.message;
+
+  logger('error', `{${req.method}} ${req.originalUrl} -> ${errorMessage}`);
+
+  return res.status(errorStatus).json({ error: 'Something went wrong' });
 };
 
 module.exports = errorHandlerMiddleware;

@@ -8,12 +8,17 @@ const validateResultsMiddleware = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
+    const formattedErrors = errors.mapped();
+
+    for (const key in formattedErrors) {
+      delete formattedErrors[key].value;
+    }
+
     return res.status(400).json({
-      error: errors.mapped(),
+      error: formattedErrors,
     });
   }
 
-  // if there is no other middleware, continue with the rest of the code
   next();
 };
 

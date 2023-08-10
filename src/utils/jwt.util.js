@@ -1,4 +1,5 @@
-const { jwtSecret } = require('../configs/env.config');
+const jwt = require('jsonwebtoken');
+const { jwtSecret, jwtExpiresIn } = require('../configs/env.config');
 
 /**
  * Generate JWT
@@ -13,7 +14,7 @@ const generateJWT = (uid) => {
       payload,
       jwtSecret,
       {
-        expiresIn: '24h',
+        expiresIn: jwtExpiresIn,
       },
       (err, token) => {
         if (err) {

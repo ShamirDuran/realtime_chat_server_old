@@ -1,6 +1,6 @@
 const { port, prefix } = require('./src/configs/env.config');
-const { logger } = require('./src/utils/logs.utils');
-const { dbConnection } = require('./src/database/config');
+const { logger } = require('./src/utils/logs.util');
+const { dbConnection } = require('./src/database/config.db');
 const errorHandlerMiddleware = require('./src/middlewares/error.middleware');
 
 // Express
@@ -19,12 +19,15 @@ dbConnection();
 
 // Middlewares
 app.use(express.json());
-app.use(errorHandlerMiddleware);
 app.use(cors());
 
 // Routes
-app.get(prefix, (req, res) => res.json({ message: 'Base route' }));
-app.use(`${prefix}/test`, require('./src/routes/test.route'));
+app.get(`/${prefix}/test`, (req, res) => res.json({ message: 'Base route' }));
+app.use(`/${prefix}/`, require('./src/routes/test.route'));
+app.use(`/${prefix}/auth`, require('./src/routes/auth.route'));
+
+// Error handler
+app.use(errorHandlerMiddleware);
 
 server.listen(port, () => {
   logger('info', `Server running on port ${port}`);

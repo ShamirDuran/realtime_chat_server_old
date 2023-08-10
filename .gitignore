@@ -129,4 +129,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-mongo_db/
+data/mongo/data
+data/mongo/logs
