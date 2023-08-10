@@ -19,5 +19,8 @@
     "mongoose": "^7.4.1",
     "prettier": "^3.0.1",
     "socket.io": "^4.6.2"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
   }
 }
