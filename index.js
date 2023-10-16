@@ -2,6 +2,7 @@ const { port, prefix } = require('./src/configs/env.config');
 const { logger } = require('./src/utils/logs.util');
 const { dbConnection } = require('./src/database/config.db');
 const errorHandlerMiddleware = require('./src/middlewares/error.middleware');
+const morgan = require('morgan');
 
 // Express
 const express = require('express');
@@ -20,6 +21,7 @@ dbConnection();
 // Middlewares
 app.use(express.json());
 app.use(cors());
+app.use(morgan('dev'));
 
 // Routes
 app.get(`/${prefix}/test`, (req, res) => res.json({ message: 'Base route' }));

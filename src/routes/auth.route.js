@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { signUp, signIn } = require('../controllers/auth.controller');
+const { login, register, renewToken } = require('../controllers/auth.controller');
 const { signUpValidation, signInValidation } = require('./validations/auth.validation');
+const jwtValidationMiddleware = require('../middlewares/jwt.middleware');
 
-router.post('/signup', signUpValidation, signUp);
-router.post('/signin', signInValidation, signIn);
+router.post('/login', signInValidation, login);
+router.post('/register', signUpValidation, register);
+router.post('/renew-token', jwtValidationMiddleware, renewToken);
 
 module.exports = router;

@@ -1,6 +1,7 @@
-const { jwtName, jwtSecret } = require('../configs/env.config');
+const { jwtName } = require('../configs/env.config');
 const { response } = require('express');
-const jwt = require('jsonwebtoken');
+const { validateJWT } = require('../utils/jwt.util');
+const authService = require('../services/auth.service');
 
 /**
  * Validate JWT and save uid in req
@@ -16,7 +17,12 @@ const jwtValidationMiddleware = (req, res = response, next) => {
   }
 
   try {
-    const { uid } = jwt.verify(token, jwtSecret);
+    const [isValid, uid] = validateJWT(token);
+    if (!isValid) throw new Error();
+
+    const user = authService.findById(uid);
+    if (!user) throw new Error();
+
     req.uid = uid;
   } catch (error) {
     return res.status(401).json({

@@ -9,13 +9,10 @@ const validateResultsMiddleware = (req, res, next) => {
 
   if (!errors.isEmpty()) {
     const formattedErrors = errors.mapped();
-
-    for (const key in formattedErrors) {
-      delete formattedErrors[key].value;
-    }
+    const errorMessages = Object.values(formattedErrors).map((error) => error.msg);
 
     return res.status(400).json({
-      error: formattedErrors,
+      errors: errorMessages,
     });
   }
 
