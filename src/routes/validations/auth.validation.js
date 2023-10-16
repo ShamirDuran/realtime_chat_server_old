@@ -13,14 +13,14 @@ const validataAtLeastOnePrimary = (req, res, next) => {
 
 const signUpValidation = [
   validataAtLeastOnePrimary,
-  body('username')
+  body('fullname')
     .exists()
-    .withMessage('Username is required')
+    .withMessage('Fullname is required')
     .isString()
-    .withMessage('Username should be string')
+    .withMessage('Fullname should be string')
     .trim()
     .isLength({ min: 5, max: 50 })
-    .withMessage('Username should be 5 to 50 characters')
+    .withMessage('Fullname should be 5 to 50 characters')
     .toLowerCase()
     .escape(),
   body('password')
@@ -57,22 +57,19 @@ const signUpValidation = [
 ];
 
 const signInValidation = [
-  validataAtLeastOnePrimary,
+  //required
+  body('username')
+    .exists()
+    .withMessage('Username is required')
+    .isString()
+    .withMessage('Username should be string')
+    .trim(),
   body('password')
     .exists()
     .withMessage('Password is required')
     .isString()
     .withMessage('Password should be string')
     .trim(),
-  body('email').optional().isEmail().withMessage('Provide valid email').trim(),
-  body('cellphone')
-    .optional()
-    .isInt()
-    .withMessage('Phone number should be integer')
-    .toInt()
-    .trim()
-    .isLength({ min: 10, max: 15 })
-    .withMessage('Phone number should be 10 to 15 digits'),
   validateResultsMiddleware,
 ];
 

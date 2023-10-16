@@ -4,8 +4,6 @@ const { dbConnection } = require('./src/database/config.db');
 const errorHandlerMiddleware = require('./src/middlewares/error.middleware');
 const morgan = require('morgan');
 
-// Morgan
-
 // Express
 const express = require('express');
 const cors = require('cors');

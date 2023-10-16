@@ -1,20 +1,18 @@
 const { Schema, model } = require('mongoose');
 
 const userSchema = Schema({
-  username: {
+  fullname: {
     type: String,
     required: true,
     trim: true,
   },
   email: {
     type: String,
-    unique: true,
     notNull: false,
     trim: true,
   },
   cellphone: {
     type: String,
-    unique: true,
     notNull: false,
     trim: true,
   },
@@ -42,6 +40,10 @@ const userSchema = Schema({
 userSchema.methods.toJSON = function () {
   const { __v, _id, password, ...user } = this.toObject();
   user.uid = _id;
+  user.username = user.email || user.cellphone;
+  delete user.email;
+  delete user.cellphone;
+
   return user;
 };
 
